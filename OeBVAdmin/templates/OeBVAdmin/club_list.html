@@ -1,0 +1,20 @@
+{% extends 'OeBVAdmin/base_oebv_admi.html' %}
+
+{% block header %}
+  <h2 align="center" class="my-3">Vereine</h2>
+{% endblock %}
+
+{% block main %}
+  {% for club in club_list %}
+     <a href="{% url 'OeBVAdmin:club_detail' slug=club.slug %}" class="myListLinks">
+      <div class="row {% if forloop.counter0|divisibleby:2 %} myEvenRow {% endif %}">
+        <div class="col-md-1 col-2 myRightText">{{ club.club_nr }}</div>
+        <div class="col-10">{{ club.name }}{% if club.shortname and club.shortname != '' %} ({{ club.shortname }}){% endif %}</div>
+      </div>
+    </a>
+
+  {% empty %}
+
+  {% endfor %}
+  
+{% endblock %}

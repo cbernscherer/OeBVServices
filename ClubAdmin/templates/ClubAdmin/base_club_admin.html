@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block navbar_left_group %}
+  <ul class="navbar-nav">
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'ClubAdmin:tournament_list' slug=user.club.slug %}">Turnierliste</a>
+    </li>
+
+    <li class="navbar-nav">
+      <a class="nav-link" href="{% url 'ClubAdmin:tournament_create' slug=user.club.slug %}">neues Turnier</a>
+    </li>
+  </ul>
+{% endblock %}
+
+{% block content %}
+  {% block header %}{% endblock %}
+  {% block main %}{% endblock %}
+  {% block footer %}{% endblock %}
+{% endblock %}

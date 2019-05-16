@@ -1,0 +1,67 @@
+{% extends 'TournRegister/base_tourn_register.html' %}
+
+{% block header %}
+
+  {% if qs_player_not_reg.count > 0 %}
+    <h2 align="center" class="my-3">Für diese Turniere kannst du dich anmelden</h2>
+    {% for tournament in qs_player_not_reg %}
+    <a href="{% if tournament.tourn_type == 'P' %}
+      {% url 'TournRegister:register_pair' slug=tournament.slug %}
+    {% elif tournament.tourn_type == 'T' %}
+      {% url 'TournRegister:register_team' slug=tournament.slug %}
+    {% elif tournament.tourn_type == 'I' %}
+      {% url 'TournRegister:register_indiv' slug=tournament.slug %}
+    {% endif %}" class="myListLinks">
+      <div class="row {% if forloop.counter0|divisibleby:2 %} myEvenRow {% endif %}">
+        <div class="col-lg-2 col-md-3 col-5">{{ tournament.date|date:'d. M Y' }}</div>
+        <div class="col">{{ tournament.name }} <span>
+          {% if tournament.tourn_type == 'P' %}
+            (Paarturnier)
+          {% elif tournament.tourn_type == 'T' %}
+            (Teamturnier)
+          {% elif tournament.tourn_type == 'I' %}
+            (Individualturnier)
+          {% endif %}
+        </span></div>
+      </div>
+    </a>
+    {% endfor %}
+  {% endif %}
+{% endblock %}
+
+{% block main %}
+
+  {% if qs_player_reg.count > 0 %}
+    <h2 align="center" class="mt-4 mb-3">Für diese Turniere bist du gemeldet</h2>
+    {% for tourpart in qs_player_reg %}
+    <a href="{% if tourpart.participant.tournament.tourn_type == 'P' %}
+      {% url 'TournRegister:show_pair' slug=tourpart.participant.slug %}
+    {% elif tourpart.participant.tournament.tourn_type == 'T' %}
+      {% url 'TournRegister:show_team' slug=tourpart.participant.slug %}
+    {% elif tourpart.participant.tournament.tourn_type == 'I' %}
+      {% url 'TournRegister:show_indiv' slug=tourpart.participant.slug %}
+    {% endif %}" class="myListLinks">
+
+      <div class="row {% if forloop.counter0|divisibleby:2 %} myEvenRow {% endif %}">
+        <div class="col-lg-2 col-md-3 col-5">{{ tourpart.participant.tournament.date|date:'d. M Y' }}</div>
+        <div class="col">{{ tourpart.participant.tournament.name }} <span>
+          {% if tourpart.participant.tournament.tourn_type == 'P' %}
+            (Paarturnier)
+          {% elif tourpart.participant.tournament.tourn_type == 'T' %}
+            (Teamturnier)
+          {% elif tourpart.participant.tournament.tourn_type == 'I' %}
+            (Individualturnier)
+          {% endif %}
+        </span></div>
+      </div>
+    </a>
+    {% endfor %}
+  {% endif %}
+{% endblock %}
+
+{% block footer %}
+  {% if qs_player_not_reg.count == 0 and qs_player_reg.count == 0 %}
+    <h4 align="center">Keine Turniere vorhanden</h4>
+  {% endif %}
+
+{% endblock %}

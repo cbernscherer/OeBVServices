@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="jumbotron">
+  <h1>Datenschutz </h1>
+  <p>Auf dieser Seite werden folgende Daten gespeichert: </p>
+  <ul>
+    <li>Name</li>
+    <li>ÖBV-Nummer</li>
+    <li>Stammverein</li>
+    <li>Meisterpunkte</li>
+    <li>Kategorie</li>
+    <li>E-Mail für die Wiederherstellung von Passwörtern</li>
+    <li>Turnieranmeldungen</li>
+  </ul>
+  <p>Nur Anmeldungen werden an den jeweiligen Veranstalter weitergeleitet. Ansonsten werden keine Daten an Dritte weitergegeben. </p>
+  <p>Passwörter werden mit einem 512-bit-Algorithmus verschlüsselt und sind zu keiner Zeit im Klartext einsehbar.</p>
+  <a class="btn btn-info btn-lg myButton" href="{% url 'index' %}">Zurück</a>
+  </div>
+{% endblock %}

@@ -1,0 +1,49 @@
+/*message classes*/
+.messages{
+    list-style-type: none;
+    font-weight: bold;
+    text-align: center;
+}
+
+.success{
+    color: green;
+}
+
+.warning{
+    color: orange;
+}
+
+.error{
+    color: red;
+}
+
+.info{
+    color: blue;
+}
+/*end of message classes*/
+
+body{
+    font-family: 'Roboto', Sans-Serif;
+}
+
+.myEvenRow{
+    background-color: #f2f2f2;
+}
+
+.myRightText{
+    text-align: right;
+}
+
+.myListLinks{
+    color: black;
+    font-size: 0.17in;
+}
+
+.myButton{
+
+}
+
+.navbar-nav{
+    font-size: 0.2in;
+}
+

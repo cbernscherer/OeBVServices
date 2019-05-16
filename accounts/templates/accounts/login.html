@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block content %}
+  <div class="jumbotron">
+
+  <h1>Melde dich bitte an</h1>
+
+  <form method="post">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    <button type="submit" class="btn btn-info btn-lg myButton">Anmelden</button>
+  </form>
+  <a href="{% url 'accounts:reset_password' %}"><small>Passwort vergessen</small></a>
+
+  </div>
+{% endblock %}

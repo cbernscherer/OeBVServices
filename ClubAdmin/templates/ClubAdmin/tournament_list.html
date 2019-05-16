@@ -1,0 +1,27 @@
+{% extends 'ClubAdmin/base_club_admin.html' %}
+
+{% block header %}
+  <h2 class="my-3" align="center">Turniere im {{ club.name }}</h2>
+{% endblock %}
+
+{% block main %}
+  {% for tournament in tournament_list %}
+    <a href="{% url 'ClubAdmin:tournament_detail' slug=tournament.slug %}" class="myListLinks">
+      <div class="row {% if forloop.counter0|divisibleby:2 %} myEvenRow {% endif %}">
+        <div class="col-lg-2 col-md-3 col-5">{{ tournament.date|date:'d. M Y' }}</div>
+        <div class="col">{{ tournament.name }}<span>
+          {% if tournament.tourn_type == 'P' %}
+            (Paarturnier)
+          {% elif tournament.tourn_type == 'T' %}
+            (Teamturnier)
+          {% elif tournament.tourn_type == 'I' %}
+            (Individualturnier)
+          {% endif %}
+        </span></div>
+      </div>
+    </a>
+  {% empty %}
+    <h3 align="center">Keine Turniere vorhanden</h3>
+  {% endfor %}
+
+{% endblock %}

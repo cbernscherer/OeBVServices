@@ -1,0 +1,12 @@
+{% extends 'OeBVAdmin/base_oebv_admi.html' %}
+
+{% block main %}
+  <div class="jumbotron">
+    <h1>Willst du {{ club.name }} wirklich l&ouml;schen?</h1>
+    <form method="post">
+      {% csrf_token %}
+      <button class="btn btn-danger btn-lg myButton" type="submit">L&ouml;schen</button>
+      <a class="btn btn-info btn-lg myButton ml-2" href="{% url 'OeBVAdmin:club_detail' slug=club.slug %}">Zurück</a>
+    </form>
+  </div>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'OeBVAdmin/base_oebv_admi.html' %}
+
+{% block header %}
+  <h1 class="my-4" align="center">
+    {% if reg_user %}
+      Registrierte Spieler
+    {% elif not_member %}
+      Ausgeshiedene Verbandsangeh&ouml;rige
+    {% endif %}
+  </h1>
+
+{% endblock %}
+
+{% block main %}
+  {% for player in object_list %}
+     <a href="{% if reg_user %}
+       {% url 'OeBVAdmin:reguser_detail' slug=player.slug %}
+     {% elif not_member %}
+        #
+     {% endif %}" class="myListLinks">
+      <div class="row {% if forloop.counter0|divisibleby:2 %} myEvenRow {% endif %}">
+        <div class="col-md-1 col-2 myRightText">{{ player.oebv_nr }}</div>
+        <div class="col-10">{{ player.last_name }} {{ player.first_name }}</div>
+      </div>
+    </a>
+
+  {% empty %}
+    <h3 align="center">keine Einträge vorhanden</h3>
+  {% endfor %}
+
+{% endblock %}

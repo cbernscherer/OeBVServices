@@ -1,0 +1,28 @@
+{% extends 'OeBVAdmin/base_oebv_admi.html' %}
+
+{% block main %}
+  <div class="jumbotron">
+  <h1>
+    {% if new %}
+      Neuer Klub
+    {% else %}
+      {{ form.name }}
+    {% endif %}
+  </h1>
+  <form method="post">
+    {% csrf_token %}
+    <div class="form-group"><label for="id_club_nr">Club Nr</label><input type="number" name="club_nr" min="0" class="form-control" placeholder="Club nr" title="" required id="id_club_nr"></div>
+
+    <div class="form-group"><label for="id_name">Name</label><input type="text" name="name" maxlength="64" class="form-control" placeholder="Name" title="" required id="id_name"></div>
+    <div class="form-group"><label for="id_shortname">Abkürzung</label><input type="text" name="shortname" maxlength="16" class="form-control" placeholder="Abkürzung" title="" id="id_shortname"></div>
+
+
+    <button name="proceed" value="list" type="submit" class="btn btn-info btn-lg myButton">Speichern</button>
+
+    {% if new %}
+      <button name="proceed" value="new" type="submit" class="btn btn-info btn-lg myButton ml-2">Speichern & neuer Klub</button>
+    {% endif %}
+
+  </form>
+  </div>
+{% endblock %}

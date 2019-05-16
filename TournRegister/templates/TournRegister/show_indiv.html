@@ -1,0 +1,22 @@
+{% extends 'TournRegister/base_tourn_register.html' %}
+
+{% block main %}
+  <div class="jumbotron">
+    <h1>{{ part.tournament.name }}</h1>
+    <h3>{{ part.tournament.date|date:'d. M Y' }}</h3>
+    <h3>{{ part.tournament.organizer.name }}</h3>
+    {% if not part.tournament.registration_open %}<h5>Anmeldung abgeschlossen</h5>{% endif %}
+
+    {% if part.tournament.info and part.tournament.info != '' %}
+      <a href="{{ part.tournament.info }} " target="_blank"><p class="lead">Informationen</p></a>
+    {% endif %}
+
+    <p class="lead my-2">Du bist gemeldet.</p>
+
+    <a class="btn btn-info btn-lg myButton mr-2" href="{% url 'TournRegister:tournament_list' slug=user.player.slug %}">Liste</a>
+    {% if part.tournament.registration_open %}
+      <a class="btn btn-danger btn-lg myButton" href="{% url 'TournRegister:delete_participant' slug=part.slug %}">Abmelden</a>
+    {% endif %}
+
+  </div>
+{% endblock %}

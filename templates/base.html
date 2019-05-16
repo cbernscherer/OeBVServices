@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>OeBVServices</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon/apple-touch-icon.png' %}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon/favicon-32x32.png' %}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon/favicon-16x16.png' %}">
+  <link rel="manifest" href="{% static 'favicon/site.webmanifest' %}">
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
+  <link rel="stylesheet" href="{% static 'css/master.css' %}">
+  
+</head>
+<body>
+<nav class="navbar navbar-expand-xl navbar-dark bg-dark navbar-static-top myNavbar">
+  <div class="container">
+    <a class="navbar-brand bigbrand" href="{% url 'index' %}">
+      <img src="{% static 'favicon/logo.png' %}" width="30" height="30" alt="ÖBV Logo">
+    </a>
+    <button class="navbar-toggler mr-auto" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+            aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+      {% block navbar_left_group %}
+        
+      {% endblock %}
+
+      <ul class="navbar-nav ml-auto">
+        {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'about' %}">Info</a>
+          </li>
+          
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              {% if user.first_name and user.first_name != ''  %}
+                Hallo {{ user.first_name }}
+              {% else %}
+                Hallo {{ user.username }}
+              {% endif %}
+            </a>
+            <div class="dropdown-menu" aria-labelledby="userDropdown">
+              <a class="dropdown-item" href="{% url 'accounts:change_password' %}">Passwort ändern</a>
+              <a class="dropdown-item" href="{% url 'accounts:change_email' %}">Email ändern</a>
+              <a class="dropdown-item" href="{% url 'accounts:logout' %}">Abmelden</a>
+            </div>
+          </li>
+        {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'about' %}">Info</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'accounts:login' %}">Anmelden</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'accounts:signup' %}">Registrieren</a>
+          </li>
+        {% endif %}
+      </ul>
+
+    </div>
+  </div>
+
+</nav>
+
+{#messages#}
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+      <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+
+<div class="container myContent">
+  {% block content %}
+    
+  {% endblock %}
+</div>
+
+<script
+  src="https://code.jquery.com/jquery-3.4.0.min.js"
+  integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg="
+  crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+{% block scripts %}
+  
+{% endblock %}
+</body>
+</html>

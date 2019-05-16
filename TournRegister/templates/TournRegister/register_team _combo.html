@@ -1,0 +1,140 @@
+{% extends 'TournRegister/base_tourn_register.html' %}
+{% load bootstrap4 %}
+
+{% block main %}
+
+  <div class="jumbotron">
+  <h1>Anmeldung für {{ tournament.name }}</h1>
+    <h3 class="mt-3">{{ tournament.date|date:'d. F Y' }}</h3>
+    <h3 class="mb-2">{{ tournament.organizer.name }}</h3>
+
+    {% if tournament.info and tournament.info != '' %}
+      <a href="{{ tournament.info }}" target="_blank"><p class="lead">Informationen</p></a>
+    {% endif %}
+
+  {% bootstrap_form_errors form %}
+  <form method="post">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="name">Name des Teams</label>
+      <input type="text" class="player form-control
+              {% if form.errors %}
+                {% if 'name' in form.errors %}
+                  is-invalid
+                {% else %}
+                  is-valid
+                {% endif %}
+              {% endif %}"
+             name="name" id="name" placeholder="Name" required autofocus value="{{ team_name }}">
+    </div>
+
+    <h5 class="mt-4">Weitere Teammitglieder (optional)</h5>
+    <p>Gib einen Teil des Namens ein und wähle dann aus der Liste.</p>
+
+    <div class="form-row my-2">
+      <input list="oebv_members" name="player2" placeholder="Wähle einen Spieler" value="{{ pl_2 }}"
+             class="player form-control col-md-6 col-xs-12 {% if form.errors %}
+               {% if 'player2' in form.errors %}
+                 is-invalid
+               {% else %}
+                 is-valid
+               {% endif %}
+             {% endif %}">
+
+      <input list="oebv_members" name="player3" placeholder="Wähle einen Spieler" value="{{ pl_3 }}"
+             class="player form-control col-md-6 col-xs-12 {% if form.errors %}
+               {% if 'player3' in form.errors %}
+                 is-invalid
+               {% else %}
+                 is-valid
+               {% endif %}
+             {% endif %}">
+    </div>
+
+    <div class="form-row my-2">
+      <input list="oebv_members" name="player4" placeholder="Wähle einen Spieler" value="{{ pl_4 }}"
+             class="player form-control col-md-6 col-xs-12 {% if form.errors %}
+               {% if 'player4' in form.errors %}
+                 is-invalid
+               {% else %}
+                 is-valid
+               {% endif %}
+             {% endif %}">
+
+      <input list="oebv_members" name="player5" placeholder="Wähle einen Spieler" value="{{ pl_5 }}"
+             class="player form-control col-md-6 col-xs-12
+              {% if tournament.max_team_members < 5 %}
+                d-none
+              {% endif %}
+              {% if form.errors %}
+               {% if 'player5' in form.errors %}
+                 is-invalid
+               {% else %}
+                 is-valid
+               {% endif %}
+             {% endif %}">
+    </div>
+
+    <div class="form-row my-2">
+      <input list="oebv_members" name="player6" placeholder="Wähle einen Spieler" value="{{ pl_6 }}"
+             class="player form-control col-md-6 col-xs-12
+              {% if tournament.max_team_members < 6 %}
+                d-none
+              {% endif %}
+              {% if form.errors %}
+               {% if 'player6' in form.errors %}
+                 is-invalid
+               {% else %}
+                 is-valid
+               {% endif %}
+             {% endif %}">
+
+      <input list="oebv_members" name="player7" placeholder="Wähle einen Spieler" value="{{ pl_7 }}"
+             class="player form-control col-md-6 col-xs-12
+              {% if tournament.max_team_members < 7 %}
+                d-none
+              {% endif %}
+              {% if form.errors %}
+               {% if 'player7' in form.errors %}
+                 is-invalid
+               {% else %}
+                 is-valid
+               {% endif %}
+             {% endif %}">
+    </div>
+
+    <div class="form-row mt-2 mb-3">
+      <input list="oebv_members" name="player8" placeholder="Wähle einen Spieler" value="{{ pl_8 }}"
+             class="player form-control col-md-6 col-xs-12
+              {% if tournament.max_team_members < 8 %}
+                d-none
+              {% endif %}
+              {% if form.errors %}
+               {% if 'player8' in form.errors %}
+                 is-invalid
+               {% else %}
+                 is-valid
+               {% endif %}
+             {% endif %}">
+    </div>
+
+    <datalist id="oebv_members">
+      {% for choice in choices %}
+        <option value="{{ choice }}">
+      {% endfor %}
+
+    </datalist>
+
+    <button type="submit" class="btn btn-primary btn-lg myButton mr-2">Anmelden</button>
+    <a class="btn btn-info btn-lg myButton" href="{% url 'TournRegister:tournament_list' slug=user.player.slug %}">Zurück</a>
+  </form>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+  <script>
+  $(".player").focus(function(){
+    $(this).select();
+  });
+  </script>
+{% endblock %}

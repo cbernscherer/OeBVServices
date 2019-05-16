@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block content %}
+  <div class="jumbotron">
+
+  <h1>Bitte registriere dich</h1>
+  <p class="lead">
+    Du benötigst deine ÖBV-Nummer, damit wir dich identifizieren können.
+  </p>
+
+  <form method="post">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    <button type="submit" class="btn btn-info btn-lg myButton">Registrieren</button>
+  </form>
+
+  </div>
+{% endblock %}

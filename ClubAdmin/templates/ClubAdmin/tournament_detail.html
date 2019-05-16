@@ -1,0 +1,60 @@
+{% extends 'ClubAdmin/base_club_admin.html' %}
+
+{% block header %}
+  <div class="jumbotron">
+    <h1>{{ tournament.name }}</h1>
+    <p class="lead">
+      <span>{{ tournament.date|date:'d. F Y' }}</span>
+      <span class="ml-2">
+        {% if tournament.tourn_type == 'P' %}
+          Paarturnier
+        {% elif tournament.tourn_type == 'T' %}
+          Teamturnier
+        {% elif tournament.tourn_type == 'I' %}
+          Individualturnier
+        {% endif %}
+      </span>
+
+      <span class="ml-2">
+        {% if tournament.registration_open %}
+          Anmeldung l&auml;uft
+        {% else %}
+          Anmeldung abgeschlossen
+        {% endif %}
+      </span>
+    </p>
+
+    <a class="btn btn-info btn-lg myButton mr-2" href="{% url 'ClubAdmin:tournament_download' slug=tournament.slug %}">Herunterladen</a>
+    <a class="btn btn-primary btn-lg myButton mr-2" href="{% url 'ClubAdmin:tournament_update' slug=tournament.slug %}">Bearbeiten</a>
+    <a class="btn btn-danger btn-lg myButton" href="{% url 'ClubAdmin:tournament_delete' slug=tournament.slug %}">L&ouml;schen</a>
+
+  </div>
+{% endblock %}
+
+{% block main %}
+  <h2 align="center" class="mb-2">Meldungen</h2>
+  {% for participant in tournament.participants.all %}
+    <div class="{% if forloop.counter0|divisibleby:2 %} myEvenRow {% endif %}">
+      {% if tournament.tourn_type == 'P' %}
+        {% for pl in participant.players.all %}
+          {{ pl.player.first_name }} {{ pl.player.last_name }}{% if forloop.counter0 == 0 %} - {% endif %}
+        {% endfor %}
+
+      {% elif tournament.tourn_type == 'I' %}
+        {% for pl in participant.players.all %}
+          {{ pl.player.first_name }} {{ pl.player.last_name }}
+        {% endfor %}
+
+      {% elif tournament.tourn_type == 'T' %}
+        <span>Team {{ participant.name }}</span><br>
+        {% for pl in participant.players.all %}
+          {% if forloop.counter0 != 0 %}, {% endif %}{{ pl.player.first_name|slice:':1' }}. {{ pl.player.last_name }}
+        {% endfor %}
+
+      {% endif %}
+    </div>
+  {% empty %}
+
+  {% endfor %}
+
+{% endblock %}

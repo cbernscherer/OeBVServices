@@ -1,0 +1,41 @@
+{% extends 'ClubAdmin/base_club_admin.html' %}
+{% load bootstrap4 %}
+{% load static %}
+
+{% block main %}
+  <div class="jumbotron">
+    <h1>
+      {% if new %}
+        Neues Turnier im {{ club.name }}
+      {% else %}
+        Turnier bearbeiten
+      {% endif %}
+    </h1>
+
+    {% if new %}
+      <p class="lead">Achtung: der Turniertyp (und Spieler pro Team) kann nachträglich nicht mehr geändert werden!</p>
+    {% else %}
+
+    {% endif %}
+
+    <form method="post">
+      {% csrf_token %}
+      {% bootstrap_form form %}
+      <button type="submit" class="btn btn-primary btn-lg myButton mr-2">Speichern</button>
+      <a class="btn btn-warning btn-lg myButton"
+         href="
+          {% if new %}
+            {% url 'ClubAdmin:tournament_list' slug=club.slug %}
+          {% else %}
+            {% url 'ClubAdmin:tournament_detail' slug=tournament.slug %}
+          {% endif %}">
+        Abbrechen
+      </a>
+    </form>
+  </div>
+
+{% endblock %}
+
+{% block scripts %}
+  <script src="{% static 'js/tournament_form.js' %}"></script>
+{% endblock %}

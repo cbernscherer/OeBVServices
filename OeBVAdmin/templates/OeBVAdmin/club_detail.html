@@ -1,0 +1,39 @@
+{% extends 'OeBVAdmin/base_oebv_admi.html' %}
+
+{% block main %}
+  <div class="jumbotron">
+    <h1>{{ club.name }}</h1>
+    <div class="row mt-4 mb-2">
+      <h3 class="col-xl-2 col-md-3 col-5">Nummer:</h3>
+      <h3 class="col">{{ club.club_nr }}</h3>
+    </div>
+
+    {% if club.shortname and club.shortname != '' %}
+      <div class="row my-2">
+        <h3 class="col-xl-2 col-md-3 col-5">Abk&uuml;rzung:</h3>
+        <h3 class="col">{{ club.shortname }}</h3>
+      </div>
+    {% endif %}
+
+    <div class="row my-2">
+      <h3 class="col-xl-2 col-md-3 col-5">Admin:</h3>
+        {% if club.club_admin %}
+          <h3 class="col">{{ club.club_admin.username }}
+          <a class="btn btn-danger myButton ml-3" href="{% url 'OeBVAdmin:remove_club_admin' slug=club.slug %}">Entfernen</a>
+          </h3>
+        {% else %}
+          <div class="col">
+            <a class="btn btn-primary myButton" href="{% url 'OeBVAdmin:create_club_admin' slug=club.slug %}">Anlegen</a>
+          </div>
+
+        {% endif %}
+    </div>
+    <div class="mt-4">
+      <a class="btn btn-info btn-lg myButton" href="{% url 'OeBVAdmin:club_list' %}">Liste</a>
+      <a class="btn btn-primary btn-lg myButton ml-2" href="{% url 'OeBVAdmin:club_update' slug=club.slug %}">Bearbeiten</a>
+      <a class="btn btn-danger btn-lg myButton ml-2" href="{% url 'OeBVAdmin:club_delete' slug=club.slug %}">L&ouml;schen</a>
+    </div>
+
+
+  </div>
+{% endblock %}

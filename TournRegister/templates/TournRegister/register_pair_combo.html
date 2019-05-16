@@ -1,0 +1,36 @@
+{% extends 'TournRegister/base_tourn_register.html' %}
+{% load bootstrap4 %}
+
+{% block main %}
+
+  <div class="jumbotron">
+  <h1>Anmeldung für {{ tournament.name }}</h1>
+    <h3 class="mt-3">{{ tournament.date|date:'d. F Y' }}</h3>
+    <h3 class="mb-2">{{ tournament.organizer.name }}</h3>
+
+    {% if tournament.info and tournament.info != '' %}
+      <a href="{{ tournament.info }} " target="_blank"><p class="lead">Informationen</p></a>
+    {% endif %}
+
+  {% bootstrap_form_errors form %}
+  <form method="post">
+    {% csrf_token %}
+    <p>Gib einen Teil des Namens ein und wähle dann aus der Liste.</p>
+    <div class="form-group {% if form.errors %} is-invalid {% endif %}">
+      <label for="id_partner">Partner</label>
+      <input list="oebv_members" autofocus class="form-control {% if form.errors %} is-invalid {% endif %}" name="partner"
+             required id="id_partner" placeholder="Wähle einen Spieler">
+    </div>
+
+    <datalist id="oebv_members">
+      {% for choice in choices %}
+        <option value="{{ choice }}">
+      {% endfor %}
+
+    </datalist>
+
+    <button type="submit" class="btn btn-primary btn-lg myButton mr-2">Anmelden</button>
+    <a class="btn btn-info btn-lg myButton" href="{% url 'TournRegister:tournament_list' slug=user.player.slug %}">Zurück</a>
+  </form>
+  </div>
+{% endblock %}

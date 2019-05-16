@@ -1,0 +1,21 @@
+{% extends 'OeBVAdmin/base_oebv_admi.html' %}
+
+{% block main %}
+  <div class="jumbotron">
+    <h1>Aktuelle Spielerdaten einspielen</h1>
+
+    <form enctype="multipart/form-data" method="post">
+      {% csrf_token %}
+
+      <div class="form-group">
+        <label for="id_players_file">Spielerdatei (SpoXls)</label>
+        <div class="row bootstrap4-multi-input">
+          <div class="col-12">
+            <input type="file" name="players_file" required id="id_players_file" accept=".xls,.xlsx">
+          </div>
+        </div>
+        </div>
+      <button type="submit" class="btn btn-info btn-lg myButton">Einspielen</button>
+    </form>
+  </div>
+{% endblock %}

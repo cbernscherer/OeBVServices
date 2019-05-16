@@ -1,0 +1,16 @@
+{% extends 'OeBVAdmin/base_oebv_admi.html' %}
+{% load bootstrap4 %}
+
+{% block main %}
+  <div class="jumbotron">
+    <h1>Admin für {{ clubname }} anlegen</h1>
+
+    <form method="post">
+      {% csrf_token %}
+      {% bootstrap_form form %}
+      <button type="submit" class="btn btn-primary btn-lg myButton">Anlegen</button>
+      <a class="btn btn-info btn-lg myButton ml-2" href="{% url 'OeBVAdmin:club_detail' slug=slug %}">Zurück</a>
+    </form>
+  </div>
+
+{% endblock %}

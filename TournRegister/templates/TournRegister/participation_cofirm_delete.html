@@ -1,0 +1,23 @@
+{% extends 'TournRegister/base_tourn_register.html' %}
+
+{% block main %}
+  <div class="jumbotron">
+  <h1 class="mb-3">{% if participant.tournament.tourn_type == 'P' or participant.tournament.tourn_type == 'I' %}
+    Willst du dich vom {{ participant.tournament.name }} abmelden?
+  {% elif participant.tournament.tourn_type == 'T' %}
+    Willst du das Team {{ participant.name }} wirklich vom {{ participant.tournament.name }} abmelden?
+  {% endif %}</h1>
+
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger btn-lg myButton mr-2">Abmelden</button>
+    <a class="btn btn-info btn-lg myButton" href="{% if participant.tournament.tourn_type == 'P' %}
+      {% url 'TournRegister:show_pair' slug=participant.slug %}
+    {% elif participant.tournament.tourn_type == 'T' %}
+      {% url 'TournRegister:show_team' slug=participant.slug %}
+    {% elif participant.tournament.tourn_type == 'I' %}
+      {% url 'TournRegister:show_indiv' slug=participant.slug %}
+    {% endif %}">Zurück</a>
+  </form>
+  </div>
+{% endblock %}
