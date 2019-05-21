@@ -1,5 +1,6 @@
 from django import forms
 from ClubAdmin import models
+import datetime
 
 class TournamentForm(forms.ModelForm):
 
@@ -19,6 +20,14 @@ class TournamentForm(forms.ModelForm):
         self.fields['registration_open'].label = 'Anmeldung offen'
         self.fields['max_team_members'].label = 'Maximalanzahl Spieler pro Team'
 
+    def clean_date(self):
+        data = self.cleaned_data.get('date')
+
+        if data < datetime.date.today():
+            raise forms.ValidationError('Das Datum liegt in der Vergangenheit')
+        return data
+
+
 class TournamentUpdateForm(TournamentForm):
 
     def __init__(self, *args, **kwargs):
@@ -26,3 +35,11 @@ class TournamentUpdateForm(TournamentForm):
 
         self.fields['tourn_type'].disabled = True
         self.fields['max_team_members'].disabled = True
+
+    def clean_date(self):
+        data = self.cleaned_data.get('date')
+        if 'date' in self.changed_data:
+            if data < datetime.date.today():
+                raise forms.ValidationError('Das Datum liegt in der Vergangenheit')
+
+        return data
