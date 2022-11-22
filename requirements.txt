@@ -1,5 +1,5 @@
 django==2.2.2
-Pillow==6.0.0
+Pillow==9.3.0
 argon2-cffi==19.1.0
 bcrypt==3.1.6
 cffi==1.12.3
